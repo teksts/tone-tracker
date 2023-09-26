@@ -20,11 +20,26 @@ function AudioAnalyzer(props) {
       }
     }
   }, [source])
-
-return (
-  <>
-  </>
-)
+  const sampleAnalyser = () => {
+    const analyser = analyserNode;
+    const bufferLength = analyser.fftSize;
+    let i = 0;
+    while (i < 10000000) {
+      if (i % 1000 === 0) {
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteTimeDomainData(dataArray);
+        console.log(dataArray)
+      }
+      i++;
+    }
+  }
+  return (
+    <>
+      <button onClick={sampleAnalyser}>
+        Sample
+      </button>
+    </>
+  )
 }
 
 export default AudioAnalyzer

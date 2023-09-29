@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css'
+import AudioAnalyzer from './components/AudioAnalyzer';
 
 function App() {
   const [micInput, setMicInput] = useState(null);
@@ -29,8 +30,9 @@ function App() {
   return (
     <>
       <button onClick={toggleMic}>
-        {micInput ? "Record" : "Stop"}
+        {micInput ? "Stop" : "Record"}
       </button>
+      <AudioAnalyzer source={micInput} />
     </>
   )
 }

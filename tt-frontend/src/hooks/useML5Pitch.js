@@ -1,57 +1,55 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import GLOBAL from "../constants/global";
 
 function useML5Pitch(stream) {
   const audioContextRef = useRef(null);
-  const pitchRef = useRef(null);
-  const path = 'https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/'
-
+  const [pitch, setPitch] = useState("No pitch detected.");
+  
+  // model loading handler required by ML5
   function modelLoadedStatus() {
     console.log("Model loaded!")
   }
 
-  function startPitch(stream, audioContext) {
-    console.log("ml5:", ml5);
-    const pitch = ml5.pitchDetection(path, audioContext, stream, modelLoadedStatus)
-    return pitch;
-  }
+  // retrieve pitch value from detector
+  function pitchLoop(pitchDetector) {
+    // execute only if audio source is active
+    if (pitchDetector.stream.active) {
+      pitchDetector.getPitch((err, pitch) => {
+        if (err) {
+          console.error(err);
+        }
+        console.log(pitch);
+        // update state
+        setPitch(pitch);
 
-  function pitchLoop(pitch) {
-    pitch.getPitch((err, freq) => {
-      if (err) {
-        console.error(err);
-      }
-      console.log(freq);
-      pitchRef.current = freq;
-    })
-    pitchLoop(pitch);
-  }
-
-  function getPitch(pitch) {
-    pitch.getPitch(function (err, frequency) {
-      if (err) {
-        console.error(err);
-      }
-      console.log(frequency);
-      pitchRef.current = frequency
-
-      getPitch(pitch);
-    })
-
+        // call recursively to monitor until mic is disabled
+        pitchLoop(pitchDetector);
+      })
+    }
   }
 
   useEffect(() => {
-    console.log("useEffect executed")
+    // build context and initiate pitch detection only if mic input
     if (stream) {
       const ctx = new ((window.AudioContext || window.webkitAudioContext))
       audioContextRef.current = ctx;
+      const pitchDetector = ml5.pitchDetection(
+        GLOBAL.PATHS.ML5_MODEL,
+        audioContextRef.current,
+        stream,
+        modelLoadedStatus
+      );
 
-      const pitch = ml5.pitchDetection(path, audioContextRef.current, stream, modelLoadedStatus);
-
-      getPitch(pitch);
-
+      pitchLoop(pitchDetector, setPitch);
+      
+      // cleanup and teardown context on mic disconnect
+      return () => {
+        ctx.close();
+      }
     }
   }, [stream])
-  return pitchRef;
+
+  return pitch;
 }
 
 export default useML5Pitch;

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import './App.css'
 import AudioAnalyzer from './components/AudioAnalyzer';
+import ML5PitchDetector from './components/ML5PitchDetector';
 
 function App() {
   const [micInput, setMicInput] = useState(null);
+  const [runML5, setRunML5] = useState(false);
 
-  const getMic = async () => {
+  async function getMic() {
     try {
       const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
       setMicInput(mic);
@@ -14,16 +16,24 @@ function App() {
     }
   }
 
-  const stopMic = () => {
+  function stopMic() {
     micInput.getTracks().forEach(track => track.stop());
     setMicInput(null);
   }
 
-  const toggleMic = () => {
+  function toggleMic() {
     if (micInput) {
       stopMic();
     } else {
       getMic();
+    }
+  }
+
+  function toggleML5() {
+    if (runML5) {
+      setRunML5(false);
+    } else {
+      setRunML5(true);
     }
   }
 
@@ -32,7 +42,10 @@ function App() {
       <button onClick={toggleMic}>
         {micInput ? "Stop" : "Record"}
       </button>
-      <AudioAnalyzer source={micInput} />
+      <button onClick={toggleML5}>
+        {runML5 ? "Stop ML5" : "Run ML5"}
+      </button>
+      {runML5 && <ML5PitchDetector source={micInput}/>}   
     </>
   )
 }

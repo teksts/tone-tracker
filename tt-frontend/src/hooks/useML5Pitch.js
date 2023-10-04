@@ -3,32 +3,41 @@ import GLOBAL from "../constants/global";
 
 function useML5Pitch(stream) {
   const audioContextRef = useRef(null);
-  const [pitch, setPitch] = useState("No pitch detected.");
-  
+  const [pitchValues, setPitchValues] = useState([]);
+
   // model loading handler required by ML5
   function modelLoadedStatus() {
     console.log("Model loaded!")
   }
 
   // retrieve pitch value from detector
-  function pitchLoop(pitchDetector) {
+  async function pitchLoop(pitchDetector) {
+    let pitchArr = [];
     // execute only if audio source is active
     if (pitchDetector.stream.active) {
-      pitchDetector.getPitch((err, pitch) => {
+      await pitchDetector.getPitch((err, pitch) => {
         if (err) {
           console.error(err);
         }
-        console.log(pitch);
-        // update state
-        setPitch(pitch);
+        // push value only if frequency detected (no null)
+        if (pitch) {
+          pitchArr.push(pitch)
+        }
 
-        // call recursively to monitor until mic is disabled
-        pitchLoop(pitchDetector);
       })
+      // call recursively to monitor until mic is disabled
+      // add value of each sample to output array
+      pitchArr = pitchArr.concat(await pitchLoop(pitchDetector));
+      console.log(pitchArr)
+      return pitchArr
+    } else {
+      // update state
+      return pitchArr
     }
   }
 
   useEffect(() => {
+
     // build context and initiate pitch detection only if mic input
     if (stream) {
       const ctx = new ((window.AudioContext || window.webkitAudioContext))
@@ -39,9 +48,15 @@ function useML5Pitch(stream) {
         stream,
         modelLoadedStatus
       );
+      // use a "fetcher" to capture all samples from a single recording
+      // this structure is necessary to ensure all asyncronous calls are handled correctly before state update
+      const grabPitchArr = async () => {
+        const newPitchValues = await pitchLoop(pitchDetector)
+        setPitchValues(newPitchValues);
+      }
 
-      pitchLoop(pitchDetector, setPitch);
-      
+      grabPitchArr();
+
       // cleanup and teardown context on mic disconnect
       return () => {
         ctx.close();
@@ -49,7 +64,7 @@ function useML5Pitch(stream) {
     }
   }, [stream])
 
-  return pitch;
+  return pitchValues;
 }
 
 export default useML5Pitch;

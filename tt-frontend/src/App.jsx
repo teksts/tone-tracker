@@ -40,16 +40,19 @@ function App() {
 
   return (
     <>
-    <div>
-      <button onClick={toggleMic}>
-        {micInput ? "Stop" : "Record"}
-      </button>
-      <button onClick={toggleML5}>
-        {runML5 ? "Stop ML5" : "Run ML5"}
-      </button>
-      {runML5 && <ML5PitchDetector source={micInput}/>}   
-    </div >
-      <Canvas />
+      <div className='body'>
+        <div>
+          <button onClick={toggleMic}>
+            {micInput ? "Stop" : "Record"}
+          </button>
+          <button onClick={toggleML5}>
+            {runML5 ? "Stop ML5" : "Run ML5"}
+          </button>
+          {runML5 && <ML5PitchDetector source={micInput} />}
+        </div >
+        <Canvas />
+
+      </div>
     </>
   )
 }

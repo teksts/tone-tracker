@@ -48,6 +48,7 @@ function useML5Pitch(stream) {
         stream,
         modelLoadedStatus
       );
+      console.log(pitchDetector.audioContext)
       // use a "fetcher" to capture all samples from a single recording
       // this structure is necessary to ensure all asyncronous calls are handled correctly before state update
       const grabPitchArr = async () => {

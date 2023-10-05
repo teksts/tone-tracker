@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css'
 import AudioAnalyzer from './components/AudioAnalyzer';
 import ML5PitchDetector from './components/ML5PitchDetector';
+import Canvas from './components/Canvas';
 
 function App() {
   const [micInput, setMicInput] = useState(null);
@@ -39,13 +40,19 @@ function App() {
 
   return (
     <>
-      <button onClick={toggleMic}>
-        {micInput ? "Stop" : "Record"}
-      </button>
-      <button onClick={toggleML5}>
-        {runML5 ? "Stop ML5" : "Run ML5"}
-      </button>
-      {runML5 && <ML5PitchDetector source={micInput}/>}   
+      <div className='body'>
+        <div>
+          <button onClick={toggleMic}>
+            {micInput ? "Stop" : "Record"}
+          </button>
+          <button onClick={toggleML5}>
+            {runML5 ? "Stop ML5" : "Run ML5"}
+          </button>
+          {runML5 && <ML5PitchDetector source={micInput} />}
+        </div >
+        <Canvas />
+
+      </div>
     </>
   )
 }

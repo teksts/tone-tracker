@@ -1,12 +1,28 @@
+import { useState } from "react";
 import useML5Pitch from "../hooks/useML5Pitch";
+import SVG from "./SVG";
 
 function ML5PitchDetector(props) {
   const { source } = props;
-  const pitch = useML5Pitch(source);
-  console.log("pitch:", pitch)
+  const pitchValues = useML5Pitch(source);
+  console.log("pitch values:", pitchValues)
+
+  const [drawCurve, setDrawCurve] = useState(false);
+
+  function toggleCurve() {
+    if (drawCurve) {
+      setDrawCurve(false)
+    } else {
+      setDrawCurve(true)
+    }
+  }
+
   return (
     <>
-      <h2>Pitch: {pitch}</h2>
+      <button onClick={toggleCurve}>
+        Draw Curve
+      </button>
+      {drawCurve && <SVG pitchValues={pitchValues}/>}
     </>
   )
 

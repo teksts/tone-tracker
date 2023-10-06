@@ -58,13 +58,13 @@ function transformCoordinates(pitchValues) {
   const maxPitch = Math.max(...pitchValues.map(coord => coord.pitch));
   
     // set x coordinate scale to fit within the desired range (fit to svg surface) 
-    const xScale = 1800 / (maxTimestamp - minTimestamp);
+    const xScale = 2000 / (maxTimestamp - minTimestamp);
     const yScale = 800 / (maxPitch - minPitch);
   // subtract the minimum value from each timestamp to shift the values
   // scale x coordinates
   const transformedCoordinates = pitchValues.map(coord => ({
-    x: (coord.timestamp - minTimestamp + 100) * xScale, // shift and scale x coordinate
-    y: (coord.pitch - minPitch + 100) * yScale// 
+    x: (coord.timestamp - minTimestamp) * xScale, // shift and scale x coordinate
+    y: (coord.pitch - minPitch) * yScale// 
   }));
 
   return transformedCoordinates;

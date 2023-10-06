@@ -20,8 +20,8 @@ function useML5Pitch(stream) {
           console.error(err);
         }
         // push value only if frequency detected (no null)
-        if (pitch) {
-          pitchArr.push(pitch)
+        if (pitch && pitch < 600) {
+          pitchArr.push({ timestamp: Date.now(), pitch})
         }
 
       })

@@ -3,7 +3,8 @@ import AudioAnalyzer from './components/AudioAnalyzer';
 import ML5PitchDetector from './components/ML5PitchDetector';
 import Canvas from './components/Canvas';
 import "./styles/index.css"
-import { NavBar } from './components/NavBar';
+import NavBar from './components/NavBar';
+import SidePanel from './components/SidePanel';
 
 
 
@@ -44,6 +45,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <SidePanel />
       {/* <div>
           <button onClick={toggleMic}>
             {micInput ? "Stop" : "Record"}

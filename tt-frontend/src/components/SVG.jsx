@@ -1,6 +1,6 @@
 import pitchCurve from "../helpers/pitchCurve";
 
-function SVG(props) {
+const SVG = (props) => {
   const { pitchValues } = props;
   const { svgPath, bezierCommand, lineCommand, transformCoordinates } = pitchCurve;
 

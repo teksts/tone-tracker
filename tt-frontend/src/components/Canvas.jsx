@@ -1,7 +1,7 @@
 
 import { useRef, useEffect } from 'react'
 
-function Canvas(props) {
+const Canvas = (props) => {
 
   const canvasRef = useRef(null)
 

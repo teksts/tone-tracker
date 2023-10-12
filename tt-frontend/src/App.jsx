@@ -5,6 +5,7 @@ import Canvas from './components/Canvas';
 import "./styles/index.css"
 import NavBar from './components/NavBar';
 import SidePanel from './components/SidePanel';
+import PitchSpace from './components/PitchSpace';
 
 
 
@@ -45,6 +46,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <PitchSpace/>
       <SidePanel />
       {/* <div>
           <button onClick={toggleMic}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-function AudioAnalyzer(props) {
+const AudioAnalyzer = (props) => {
   const { source } = props;
   const [analyserNode, setAnalyserNode] = useState(null);
 

@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import './App.css'
 import AudioAnalyzer from './components/AudioAnalyzer';
 import ML5PitchDetector from './components/ML5PitchDetector';
 import Canvas from './components/Canvas';
+import "./styles/index.css"
+import NavBar from './components/NavBar';
+import SidePanel from './components/SidePanel';
+import PitchSpace from './components/PitchSpace';
+
+
 
 function App() {
   const [micInput, setMicInput] = useState(null);
@@ -40,8 +45,10 @@ function App() {
 
   return (
     <>
-      <div className='body'>
-        <div>
+      <NavBar />
+      <PitchSpace/>
+      <SidePanel />
+      {/* <div>
           <button onClick={toggleMic}>
             {micInput ? "Stop" : "Record"}
           </button>
@@ -50,9 +57,7 @@ function App() {
           </button>
           {runML5 && <ML5PitchDetector source={micInput} />}
         </div >
-        <Canvas />
-
-      </div>
+        <Canvas /> */}
     </>
   )
 }

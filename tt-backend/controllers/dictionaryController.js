@@ -2,7 +2,7 @@ import dictionary from "chinese-dictionary";
 
 const search = async (req, res) => {
   try {
-    const entries = await dictionary.query(req.quert.word);
+    const entries = await dictionary.query(req.query.word);
     res.send(entries);
   } catch (error) {
     res.status(500).send(error);

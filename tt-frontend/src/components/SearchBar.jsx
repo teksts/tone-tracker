@@ -1,4 +1,6 @@
+
 const SearchBar = () => {
+  
 
   return (
     <form className="p-4 w-full">

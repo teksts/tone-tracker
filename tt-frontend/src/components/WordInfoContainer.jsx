@@ -20,26 +20,26 @@ const WordInfoContainer = (props) => {
   )
 }
 
-WordInfoContainer.defaultProps = {
-  word: {
-    traditional: '天氣',
-    simplified: '天气',
-    pinyinMarks: 'tiān qì',
-    pinyinNumbers: 'tian1 qi4',
-    english: ['weather'],
-    toneMarks: [1, 4],
-    hash: '999999999...',
-    hsk: 1,
-    word_id: 123456,
-    measureWords: [
-      {
-        traditional: '個',
-        simplified: '个',
-        pinyinMarks: 'gè',
-        pinyinNumbers: 'ge4'
-      }
-    ]
-  }
-}
+// WordInfoContainer.defaultProps = {
+//   word: {
+//     traditional: '天氣',
+//     simplified: '天气',
+//     pinyinMarks: 'tiān qì',
+//     pinyinNumbers: 'tian1 qi4',
+//     english: ['weather'],
+//     toneMarks: [1, 4],
+//     hash: '999999999...',
+//     hsk: 1,
+//     word_id: 123456,
+//     measureWords: [
+//       {
+//         traditional: '個',
+//         simplified: '个',
+//         pinyinMarks: 'gè',
+//         pinyinNumbers: 'ge4'
+//       }
+//     ]
+//   }
+// }
 
 export default WordInfoContainer;

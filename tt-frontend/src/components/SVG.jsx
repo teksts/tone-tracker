@@ -1,4 +1,4 @@
-import pitchCurve from "../helpers/pitchCurve";
+import pitchCurve from "../utils/pitchCurve";
 
 const SVG = (props) => {
   // const { pitchValues } = props;

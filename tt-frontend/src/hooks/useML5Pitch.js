@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import GLOBAL from "../constants/global";
+import { ML5_MODEL } from "../constants";
 
 function useML5Pitch(stream) {
   const audioContextRef = useRef(null);
@@ -43,7 +43,7 @@ function useML5Pitch(stream) {
       const ctx = new ((window.AudioContext || window.webkitAudioContext))
       audioContextRef.current = ctx;
       const pitchDetector = ml5.pitchDetection(
-        GLOBAL.PATHS.ML5_MODEL,
+        ML5_MODEL,
         audioContextRef.current,
         stream,
         modelLoadedStatus

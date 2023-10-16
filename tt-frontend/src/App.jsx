@@ -6,8 +6,7 @@ import "./styles/index.css"
 import NavBar from './components/NavBar';
 import SidePanel from './components/SidePanel';
 import PitchSpace from './components/PitchSpace';
-
-
+import WordProvider from './context/WordProvider.jsx'
 
 function App() {
   const [micInput, setMicInput] = useState(null);
@@ -44,11 +43,12 @@ function App() {
   }
 
   return (
-    <>
-      <NavBar />
-      <PitchSpace/>
-      <SidePanel />
-      {/* <div>
+    <WordProvider>
+      <>
+        <NavBar />
+        <PitchSpace />
+        <SidePanel />
+        {/* <div>
           <button onClick={toggleMic}>
             {micInput ? "Stop" : "Record"}
           </button>
@@ -58,7 +58,8 @@ function App() {
           {runML5 && <ML5PitchDetector source={micInput} />}
         </div >
         <Canvas /> */}
-    </>
+      </>
+    </WordProvider>
   )
 }
 
